@@ -1,0 +1,356 @@
+#!/usr/bin/python3
+
+import serial #note// the serial port must be disabled from getty
+import time
+import tkinter as tk
+from tkinter import * #imports library that python uses for GUI
+from tkinter import ttk #imports design aspects of GUI
+
+def onprompt(*args):
+print(text=”You enabled the system” )
+
+#zone 1 set function
+def send1():
+choice = “1”
+setlevel=str(zone1.get())
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+ser.write(setlevel.encode(‘ascii’) + b”\r\n”)
+time.sleep(2)
+while ser.inWaiting() > 0:
+zone1act.set(ser.read(2).decode(‘ascii’, ‘ignore’))
+read1.set( ser.read(2).decode(‘ascii’, ‘ignore’))
+
+#zone 2 set function
+def send2():
+choice = “2”
+setlevel=str(zone2.get())
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+ser.write(setlevel.encode(‘ascii’) + b”\r\n”)
+time.sleep(1)
+while ser.inWaiting() > 0:
+zone2act.set(ser.read(2).decode(‘ascii’, ‘ignore’))
+read2.set( ser.read(2).decode(‘ascii’, ‘ignore’))
+
+#zone 3 set function
+def send3():
+choice = “3”
+setlevel=str(zone3.get())
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+ser.write(setlevel.encode(‘ascii’) + b”\r\n”)
+time.sleep(2)
+while ser.inWaiting() > 0:
+zone3act.set(ser.read(2).decode(‘ascii’, ‘ignore’))
+read3.set( ser.read(2).decode(‘ascii’, ‘ignore’))
+
+#zone 4 set function
+def send4():
+choice = “4”
+setlevel=str(zone4.get())
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+ser.write(setlevel.encode(‘ascii’) + b”\r\n”)
+time.sleep(2)
+while ser.inWaiting() > 0:
+zone4act.set(ser.read(2).decode(‘ascii’, ‘ignore’))
+read4.set( ser.read(2).decode(‘ascii’, ‘ignore’))
+
+#zone 5 set function
+def send5():
+choice = “5”
+setlevel=str(zone5.get())
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+ser.write(setlevel.encode(‘ascii’) + b”\r\n”)
+time.sleep(2)
+while ser.inWaiting() > 0:
+zone5act.set(ser.read(2).decode(‘ascii’, ‘ignore’))
+read5.set( ser.read(2).dec2de(‘ascii’, ‘ignore’))
+
+#zone 6 set function
+def send6():
+choice = “6”
+setlevel=str(zone6.get())
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+ser.write(setlevel.encode(‘ascii’) + b”\r\n”)
+time.sleep(2)
+while ser.inWaiting() > 0:
+zone6act.set(ser.read(2).decode(‘ascii’, ‘ignore’))
+read6.set( ser.read(2).decode(‘ascii’, ‘ignore’))
+
+#zone 7 set function
+def send7():
+choice = “7”
+setlevel=str(zone7.get())
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+ser.write(setlevel.encode(‘ascii’) + b”\r\n”)
+time.sleep(2)
+while ser.inWaiting() > 0:
+zone7act.set(ser.read(2).decode(‘ascii’, ‘ignore’))
+read7.set( ser.read(2).decode(‘ascii’, ‘ignore’))
+
+#zone 1 moisture update function
+def update1():
+choice = “8”
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+time.sleep(2)
+while ser.inWaiting() > 0:
+read1.set( ser.read(2).decode(‘ascii’, ‘ignore’))
+
+#zone 2 moisture update function
+def update2():
+choice = “9”
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+time.sleep(2)
+while ser.inWaiting() > 0:
+read2.set( ser.read(2).decode(‘ascii’, ‘ignore’))
+
+#zone 3 moisture update function
+def update3():
+choice = “10”
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+time.sleep(2)
+while ser.inWaiting() > 0:
+read3.set( ser.read(2).decode(‘ascii’, ‘ignore’))
+
+#zone 4 moisture update function
+def update4():
+choice = “11”
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+time.sleep(2)
+while ser.inWaiting() > 0:
+read4.set( ser.read(2).decode(‘ascii’, ‘ignore’))
+
+#zone 5 moisture update function
+def update5():
+choice = “12”
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+time.sleep(2)
+while ser.inWaiting() > 0:
+read5.set( ser.read(2).decode(‘ascii’, ‘ignore’))
+
+#zone 6 moisture update function
+def update6():
+choice = “13”
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+time.sleep(2)
+while ser.inWaiting() > 0:
+read6.set( ser.read(2).decode(‘ascii’, ‘ignore’))
+
+#zone 7 moisture update function
+def update7():
+choice = “14”
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+time.sleep(2)
+while ser.inWaiting() > 0:
+read7.set( ser.read(2).decode(‘ascii’, ‘ignore’))
+
+#auto update tX function
+def autoupdate():
+weightMaster.set( weightVal1.get()+weightVal2.get()+weightVal3.get()+weightVal4.get()+weightVal5.get()+weightVal6.get()+weightVal7.get())
+choice = “15”
+autorun=str(weightMaster.get())
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+ser.write(autorun.encode(‘ascii’) + b”\r\n”)
+time.sleep(2)
+autopop = Toplevel(bg = “red”,bd = 100)
+autopop.title(” NOTICE “)
+popup = Frame(autopop)
+popup.pack()
+Label(popup, text = “!!!!Auto Run Activated!!!!”, bg = ‘green’).pack(side = TOP)
+Button(popup, text=”STOP SEQUENCE”, command= lambda: STOPSEQ() & autopop.destroy()).pack(side = BOTTOM)
+
+#auto update end function
+def STOPSEQ():
+choice = “15”
+autorun=str(“0″)
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+ser.write(autorun.encode(‘ascii’) + b”\r\n”)
+weightVal1.set(0)
+weightVal2.set(0)
+weightVal3.set(0)
+weightVal4.set(0)
+weightVal5.set(0)
+weightVal6.set(0)
+weightVal7.set(0)
+weightMaster.set(0)
+
+def TempSet():
+choice = “16”
+setlevel=str(tempOut.get())
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+ser.write(setlevel.encode(‘ascii’) + b”\r\n”)
+time.sleep(2)
+while ser.inWaiting() > 0:
+tempOutset.set(ser.read(2).decode(‘ascii’, ‘ignore’))
+
+def TempRead():
+choice = “17”
+ser.write(choice.encode(‘ascii’) + b”\r\n”)
+time.sleep(1)
+while ser.inWaiting() > 0:
+TempCur.set(ser.read(2).decode(‘ascii’, ‘ignore’))
+
+root = Tk()
+
+#program variables
+zone1=IntVar()
+zone1act=StringVar()
+read1=StringVar()
+zone2=IntVar()
+zone2act=StringVar()
+read2=StringVar()
+zone3=IntVar()
+zone3act=StringVar()
+read3=StringVar()
+zone4=IntVar()
+zone4act=StringVar()
+read4=StringVar()
+zone5=IntVar()
+zone5act=StringVar()
+read5=StringVar()
+zone6=IntVar()
+zone6act=StringVar()
+read6=StringVar()
+zone7=IntVar()
+zone7act=StringVar()
+read7=StringVar()
+TempCur = IntVar()
+
+tempOut=IntVar()
+tempOutset=StringVar()
+
+weightMaster=IntVar()
+weightVal1=IntVar()
+weightVal2=IntVar()
+weightVal3=IntVar()
+weightVal4=IntVar()
+weightVal5=IntVar()
+weightVal6=IntVar()
+weightVal7=IntVar()
+
+ser = serial.Serial(“/dev/ttyAMA0”, baudrate=19200, timeout=3)
+root.attributes(‘-fullscreen’,True)
+root.configure(background=’cyan’)
+root.title(“Automatic Greenhouse Control Version 1.6”)
+
+mainframe= Frame(root, bg = “cyan”)
+
+mainframe.grid( padx=30, pady= 180, sticky=(N,W,E,S))
+
+mainframe.columnconfigure(0, weight=1)
+mainframe.rowconfigure(0,weight=1)
+#automation setting
+Label(mainframe, text = “weight”, bg = ‘green’).grid(column =1,row = 1, sticky = W)
+Message(mainframe, textvariable =weightMaster, bg= ‘green’).grid(column =2, row =1)
+Button(mainframe, text=”RUN”, command= autoupdate).grid(column=3, row=1,sticky=(N,W,E,S))
+#temp reading
+
+Label(mainframe, text = “Temp set at:” , bg= ‘green’).grid(column =4, row =1,sticky =E)
+Message(mainframe, textvariable = tempOutset, bg=’green’).grid(column = 5, row = 1,sticky = (N,W,E,S))
+#temp set
+Label(mainframe, text = “Desired Temperature: “,bg=”cyan”).grid(column =3, row=2, sticky = (N,W,E,S))
+Spinbox(mainframe, from_=50,to=90,textvariable = tempOut).grid(column = 4,row=2, sticky=(N,W,E,S))
+Button(mainframe, text=”set”, command=TempSet).grid(column=5, row=2,sticky=(N,W,E,S))
+#temp read
+Label(mainframe, text = “Current Temp:” , bg= ‘green’).grid(column =6, row =1,sticky =E)
+Message(mainframe, textvariable = TempCur, bg=’green’).grid(column = 7, row = 1,sticky = (N,W,E,S))
+Button(mainframe, text=”UPDATE”, command= TempRead).grid(column=8, row=1,sticky=(N,W,E,S))
+
+Label(mainframe, text=” % “,bg=”cyan”).grid(column=10,row=2,sticky = W)
+#begin zone controls
+mainframe.columnconfigure(0, weight=1)
+mainframe.rowconfigure(0,weight=1)
+Label(mainframe, text=”Zone”,bg=”cyan” ).grid(column=0, row=0, sticky=W)
+Label(mainframe, text=”Auto Update”,bg=”cyan”).grid(column=2, row=0, sticky=W)
+Label(mainframe, text=”1″,bg=”cyan” ).grid(column=0, row=6)
+Label(mainframe, text=”2″,bg=”cyan”).grid(column=0, row=8)
+Label(mainframe, text=”3″,bg=”cyan”).grid(column=0, row=10)
+Label(mainframe, text=”4″,bg=”cyan”).grid(column=0, row=12)
+Label(mainframe, text=”5″,bg=”cyan”).grid(column=0, row=14)
+Label(mainframe, text=”6″,bg=”cyan”).grid(column=0, row=16)
+Label(mainframe, text=”7″,bg=”cyan”).grid(column=0, row=18)
+
+# first zone control
+On1 = Checkbutton(mainframe, onvalue = 1, variable = weightVal1,text=”On”,bg=”cyan”).grid(column=2, row=6, sticky=(N,W,E,S))
+Label(mainframe, text = “Zone 1 Desired moisture: “,bg=”cyan”).grid(column =3, row=6, sticky = (N,W,E,S))
+Spinbox(mainframe, from_=10,to=90,textvariable = zone1).grid(column = 4,row=6, sticky=(N,W,E,S))
+Button(mainframe, text=”set”, command=send1).grid(column=5, row=6,sticky=(N,W,E,S))
+Label(mainframe, text = “Zone 1 moisture at: “,bg=”cyan”).grid(column=6,row=6,sticky=(N,W,E,S))
+Message(mainframe,textvariable=read1,bg=”cyan”).grid(column=7,row=6,sticky=(N,W,E,S))
+Button(mainframe, text=”update”, command=update1).grid(column=8,row=6,sticky=(N,W,E,S))
+Label(mainframe, text = “set at: “,bg=”cyan”).grid(column=9,row=6,sticky=W)
+Message(mainframe,textvariable=zone1act,bg=”cyan”).grid(column=10,row=6,sticky=W)
+Label(mainframe,bg=”cyan”).grid(column =3, row=7, sticky = (N,W,E,S))
+
+#2nd zone control
+On2 = Checkbutton(mainframe, onvalue =2 ,variable = weightVal2,text=”On”,bg=”cyan”).grid(column=2, row=8, sticky=(N,W,E,S))
+Label(mainframe, text = “Zone 2 Desired moisture: “,bg=”cyan”).grid(column =3, row=8, sticky = (N,W,E,S))
+Spinbox(mainframe, from_=10,to=90,textvariable = zone2).grid(column = 4,row=8, sticky=(N,W,E,S))
+Button(mainframe, text=”set”, command=send2).grid(column=5, row=8,sticky=(N,W,E,S))
+Label(mainframe, text = “Zone 2 moisture at: “,bg=”cyan”).grid(column=6,row=8,sticky=(N,W,E,S))
+Message(mainframe,textvariable=read2,bg=”cyan”).grid(column=7,row=8,sticky=(N,W,E,S))
+Button(mainframe, text=”update”, command=update2).grid(column=8,row=8,sticky=(N,W,E,S))
+Label(mainframe, text = “set at: “,bg=”cyan”).grid(column=9,row=8,sticky=W)
+Message(mainframe,textvariable=zone2act,bg=”cyan”).grid(column=10,row=8,sticky=W)
+Label(mainframe,bg=”cyan”).grid(column =3, row=9, sticky = (N,W,E,S))
+#3rd zone control
+On3 = Checkbutton(mainframe, onvalue = 4,variable = weightVal3, text=”On”,bg=”cyan”).grid(column=2, row=10, sticky=(N,W,E,S))
+Label(mainframe, text = “Zone 3 Desired moisture: “,bg=”cyan”).grid(column =3, row=10, sticky = (N,W,E,S))
+Spinbox(mainframe, from_=10,to=90,textvariable = zone3).grid(column = 4,row=10, sticky=(N,W,E,S))
+Button(mainframe, text=”set”, command=send3).grid(column=5, row=10,sticky=(N,W,E,S))
+Label(mainframe, text = “Zone 3 moisture at: “,bg=”cyan”).grid(column=6,row=10,sticky=(N,W,E,S))
+Message(mainframe,textvariable=read3,bg=”cyan”).grid(column=7,row=10,sticky=(N,W,E,S))
+Button(mainframe, text=”update”, command=update3).grid(column=8,row=10,sticky=(N,W,E,S))
+Label(mainframe, text = “set at: “,bg=”cyan”).grid(column=9,row=10,sticky=(N,W,E,S))
+Message(mainframe,textvariable=zone3act,bg=”cyan”).grid(column=10,row=10,sticky=W)
+Label(mainframe,bg=”cyan”).grid(column =3, row=11, sticky = (N,W,E,S))
+
+#4th zone
+On4 = Checkbutton(mainframe, onvalue = 8,variable = weightVal4, text=”On”,bg=”cyan”).grid(column=2, row=12, sticky=(N,W,E,S))
+Label(mainframe, text = “Zone 4 Desired moisture: “,bg=”cyan”).grid(column =3, row=12, sticky = (N,W,E,S))
+Spinbox(mainframe, from_=10,to=90,textvariable = zone4).grid(column = 4,row=12, sticky=(N,W,E,S))
+Button(mainframe, text=”set”, command=send4).grid(column=5, row=12,sticky=(N,W,E,S))
+Label(mainframe, text = “Zone 4 moisture at: “,bg=”cyan”).grid(column=6,row=12,sticky=(N,W,E,S))
+Message(mainframe,textvariable=read4,bg=”cyan”).grid(column=7,row=12,sticky=(N,W,E,S))
+Button(mainframe, text=”update”, command=update4).grid(column=8,row=12,sticky=(N,W,E,S))
+Label(mainframe, text = “set at: “,bg=”cyan”).grid(column=9,row=12,sticky=(N,W,E,S))
+Message(mainframe,textvariable=zone4act,bg=”cyan”).grid(column=10,row=12,sticky=W)
+Label(mainframe,bg=”cyan”).grid(column =3, row=13, sticky = (N,W,E,S))
+
+#5th zone control
+On5 = Checkbutton(mainframe, onvalue = 16,variable = weightVal5, text=”On”,bg=”cyan”).grid(column=2, row=14, sticky=(N,W,E,S))
+Label(mainframe, text = “Zone 5 Desired moisture: “,bg=”cyan”).grid(column =3, row=14,sticky = (N,W,E,S))
+Spinbox(mainframe, from_=10,to=90,textvariable = zone5).grid(column = 4,row=14, sticky=(N,W,E,S))
+Button(mainframe, text=”set”, command=send5).grid(column=5, row=14,sticky=(N,W,E,S))
+Label(mainframe, text = “Zone 5 moisture at: “,bg=”cyan”).grid(column=6,row=14,sticky=(N,W,E,S))
+Message(mainframe,textvariable=read5,bg=”cyan”).grid(column=7,row=14,sticky=(N,W,E,S))
+Button(mainframe, text=”update”, command=update5).grid(column=8,row=14,sticky=(N,W,E,S))
+Label(mainframe, text = “set at: “,bg=”cyan”).grid(column=9,row=14,sticky=(N,W,E,S))
+Message(mainframe,textvariable=zone5act,bg=”cyan”).grid(column=10,row=14,sticky=W)
+Label(mainframe,bg=”cyan”).grid(column =3, row=15, sticky = (N,W,E,S))
+
+#6th zone control
+On6 = Checkbutton(mainframe, onvalue = 32,variable = weightVal6, text=”On”,bg=”cyan”).grid(column=2, row=16, sticky=(N,W,E,S))
+Label(mainframe, text = “Zone 6 Desired moisture: “,bg=”cyan”).grid(column =3, row=16, sticky = (N,W,E,S))
+Spinbox(mainframe, from_=10,to=90,textvariable = zone6).grid(column = 4,row=16, sticky=(N,W,E,S))
+Button(mainframe, text=”set”, command=send6).grid(column=5, row=16,sticky=(N,W,E,S))
+Label(mainframe, text = “Zone 6 moisture at: “,bg=”cyan”).grid(column=6,row=16,sticky=(N,W,E,S))
+Message(mainframe,textvariable=read6, bg=”cyan”).grid(column=7,row=16,sticky=(N,W,E,S))
+Button(mainframe, text=”update”, command=update6).grid(column=8,row=16,sticky=(N,W,E,S))
+Label(mainframe, text = “set at: “,bg=”cyan”).grid(column=9,row=16,sticky=(N,W,E,S))
+Message(mainframe,textvariable=zone6act,bg=”cyan”).grid(column=10,row=16,sticky=W)
+Label(mainframe,bg=”cyan”).grid(column =3, row=17, sticky = (N,W,E,S))
+
+#7th zone control
+On7 = Checkbutton(mainframe, onvalue = 64,variable = weightVal7, text=”On”,bg=”cyan”).grid(column=2, row=18, sticky=(N,W,E,S))
+Label(mainframe, text = “Zone 7 Desired moisture: “,bg=”cyan”).grid(column =3, row=18, sticky = (N,W,E,S))
+Spinbox(mainframe, from_=10,to=90,textvariable = zone7).grid(column = 4,row=18, sticky=(N,W,E,S))
+Button(mainframe, text=”set”, command=send7).grid(column=5, row=18,sticky=(N,W,E,S))
+Label(mainframe, text = “Zone 7 current moisture: “,bg=”cyan”).grid(column=6,row=18,sticky=(N,W,E,S))
+Message(mainframe,textvariable=read7,bg=”cyan”).grid(column=7,row=18,sticky=(N,W,E,S))
+Button(mainframe, text=”update”, command=update7).grid(column=8,row=18,sticky=(N,W,E,S))
+Label(mainframe, text = “set at: “,bg=”cyan”).grid(column=9,row=18,sticky=(N,W,E,S))
+Message(mainframe,textvariable=zone7act,bg=”cyan”).grid(column=10,row=18,sticky=W)
+Label(mainframe,bg=”cyan”).grid(column =3, row=19, sticky = (N,W,E,S))
+
+TempRead()
+
+root.mainloop()
